@@ -1,0 +1,39 @@
+# --- Node / Vite / React frontend ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Editor/OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Python / Django backend ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+db.sqlite3
+venv/
+env/
+.venv/
+staticfiles/
+media/
+
+# Django secrets
+*.pem
