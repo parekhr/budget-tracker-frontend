@@ -35,7 +35,7 @@ export interface Transaction {
 }
 
 export function getTransactions(): Promise<Transaction[]>{
-        return Promise.resolve(transactionArray);
+        return Promise.resolve([...transactionArray]);
 }
 
 export function createTransaction(transaction: Omit<Transaction, 'id'>): Promise<Transaction> {
