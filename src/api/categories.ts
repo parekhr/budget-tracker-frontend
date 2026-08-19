@@ -2,19 +2,19 @@ const categoryArray: Category[] = [
     {
         id: 1,
         name: "Food",
-        color: "pink",
+        color: "#ec4899",
         userId: 1
     },
     {
         id: 2,
         name: "Gaming",
-        color: "green",
+        color: "#22c55e",
         userId: 1
     },
     {
         id: 3,
         name: "Subscriptions",
-        color: "blue",
+        color: "#3b82f6",
         userId: 1
     }
 ];
@@ -27,7 +27,7 @@ export interface Category{
 }
 
 export function getCategories(): Promise<Category[]>{
-    return Promise.resolve(categoryArray);
+    return Promise.resolve([...categoryArray]);
 }
 
 export function createCategory(category: Omit<Category, 'id'>): Promise<Category> {

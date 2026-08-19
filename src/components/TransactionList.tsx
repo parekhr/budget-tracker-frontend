@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type Transaction } from "../api/transactions";
 import { type Category } from "../api/categories";
-import { getCategoryBadgeClasses } from "../utils/categoryColors";
+import { getCategoryColorStyle } from "../utils/categoryColors";
 import { Pencil, Trash2 } from "lucide-react"
 
 export interface TransactionListProps {
@@ -23,7 +23,7 @@ export function TransactionList({ transactions, categories, onEdit, onDelete }: 
                         <div className="flex flex-col items-start gap-1">
                             <span className="text-white">{transaction.title}</span>
                             {category && (
-                                <span className={`px-2 py-0.5 rounded-full text-xs ${getCategoryBadgeClasses(category.color)}`}>
+                                <span className="px-2 py-0.5 rounded-full text-xs" style={getCategoryColorStyle(category.color)}>
                                     {category.name}
                                 </span>
                             )}

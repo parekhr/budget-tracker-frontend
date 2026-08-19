@@ -27,7 +27,7 @@ open/closed state, active filter/tab selection.
 
 - User auth (register/login)
 - Categories (CRUD)
-- Transactions (CRUD: amount, category, date, note)
+- Transactions (CRUD: amount, category, date, title)
 - Dashboard (spending by category, spending trend over time, total spent)
 - Budgets (monthly limit per category, with progress shown)
 
@@ -37,7 +37,8 @@ open/closed state, active filter/tab selection.
 
 - `User` — Django's built-in auth user (or a custom user model)
 - `Category` — id, user_id (FK), name, color, created_at
-- `Transaction` — id, user_id (FK), category_id (FK), amount, date, note, created_at
+  - `color` is a hex string (e.g. `#ec4899`) chosen from a frontend swatch picker, not a fixed enum — model it as a `CharField` with hex-format validation (e.g. a regex validator for `#RRGGBB`), not `choices=[...]`
+- `Transaction` — id, user_id (FK), category_id (FK), amount, date, title, created_at
 - `Budget` — id, user_id (FK), category_id (FK), month, limit_amount
 
 ## Backend responsibilities (Django + DRF)
