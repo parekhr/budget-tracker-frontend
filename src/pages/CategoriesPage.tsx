@@ -37,7 +37,6 @@ export function CategoriesPage() {
                     <h1 className="text-2xl font-bold text-white">Categories Page</h1>
                     <button
                         onClick={() => {
-                            // Logic to open a modal or navigate to a category creation page
                             setModal(true);
                             setEditingCategory(null);
                         }}
@@ -46,23 +45,27 @@ export function CategoriesPage() {
                         + Add Category
                     </button>
                 </div>
-                <CategoryList categories={categories}/>
+                <CategoryList
+                    categories={categories}
+                    onEdit={handleStartEditCategory}
+                    onDelete={handleDeleteCategory}
+                />
             </div>
             {modal && (
-                            <Modal onClose={() => setModal(false)}>
-                                <CategoryForm
-                                    category={editingCategory}
-                                    onCreate={(newCategory) => {
-                                        setCategories(prev => [...prev, newCategory]);
-                                        setModal(false);
-                                    }}
-                                    onUpdate={(updatedCategory) => {
-                                        handleEditCategory(updatedCategory);
-                                        setModal(false);
-                                    }}
-                                />
-                            </Modal>
-                        )}
+                <Modal onClose={() => setModal(false)}>
+                    <CategoryForm
+                        category={editingCategory}
+                        onCreate={(newCategory) => {
+                            setCategories(prev => [...prev, newCategory]);
+                            setModal(false);
+                        }}
+                        onUpdate={(updatedCategory) => {
+                            handleEditCategory(updatedCategory);
+                            setModal(false);
+                        }}
+                    />
+                </Modal>
+            )}
         </div>
     );
 }

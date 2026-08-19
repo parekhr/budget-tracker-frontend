@@ -10,14 +10,14 @@ const budgetArray: Budget[] = [
         id: 2,
         userId: 1,
         categoryId: 2,
-        month: "2026-07",
+        month: "2026-08",
         limitAmount: 5000
     },
     {
         id: 3,
         userId: 1,
         categoryId: 3,
-        month: "2026-10",
+        month: "2026-08",
         limitAmount: 10000
     }
 
@@ -32,7 +32,7 @@ export interface Budget {
 }
 
 export function getBudgets(): Promise<Budget[]> {
-    return Promise.resolve(budgetArray);
+    return Promise.resolve([...budgetArray]);
 }
 
 export function createBudget(budget: Omit<Budget, 'id'>): Promise<Budget> {

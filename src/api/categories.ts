@@ -1,7 +1,15 @@
+import { reassignTransactionsCategory } from "./transactions";
+
 const categoryArray: Category[] = [
     {
+        id: 0,
+        name: "Uncategorized",
+        color: "#6b7280",
+        userId: 1
+    },
+    {
         id: 1,
-        name: "Food",
+        name: "Food and drinks",
         color: "#ec4899",
         userId: 1
     },
@@ -45,8 +53,12 @@ export function updateCategory(category: Category): Promise<Category> {
 }
 
 export function deleteCategory(id: number): Promise<void> {
-    const indexToDelete = categoryArray.findIndex(item => item.id === id);
-    categoryArray.splice(indexToDelete, 1);
+    if (id === 0) {
+        return Promise.resolve();
+    }
 
-    return Promise.resolve();
+    return reassignTransactionsCategory(id, 0).then(() => {
+        const indexToDelete = categoryArray.findIndex(item => item.id === id);
+        categoryArray.splice(indexToDelete, 1);
+    });
 }

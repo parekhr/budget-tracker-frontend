@@ -57,7 +57,7 @@ export function TransactionList({ transactions, categories, onEdit, onDelete }: 
                                     )}
                                 </button>
                             </div>
-                            <span className="text-red-400 font-medium">-${transaction.amount}</span>
+                            <span className="text-red-400 font-medium">${transaction.amount}</span>
                             <span className="text-sm text-gray-400">{transaction.date}</span>
                         </div>
                     </div>

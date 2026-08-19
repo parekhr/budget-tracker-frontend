@@ -58,3 +58,11 @@ export function deleteTransaction(id : number): Promise<void> {
 
     return Promise.resolve();
 }
+
+export function reassignTransactionsCategory(oldCategoryId: number, newCategoryId: number): Promise<void> {
+    transactionArray.forEach(t => {
+        if (t.categoryId === oldCategoryId) t.categoryId = newCategoryId;
+    });
+
+    return Promise.resolve();
+}
