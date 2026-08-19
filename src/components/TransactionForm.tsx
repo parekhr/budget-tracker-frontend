@@ -18,8 +18,8 @@ export function TransactionForm({ onCreate }: TransactionFormProps) {
     const isValidCategory = categoryId !== "";
 
     return (
-        <div className="p-4 max-w-sm">
-            <h1 className="text-2xl mb-4">Add a Transaction</h1>
+        <div className="max-w-sm">
+            <h1 className="text-xl font-bold text-white mb-4">Add a Transaction</h1>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -35,11 +35,11 @@ export function TransactionForm({ onCreate }: TransactionFormProps) {
                 }}
                 className="flex flex-col gap-3"
             >
-                <label className="text-gray-700">Amount</label>
+                <label className="text-gray-400 text-sm">Amount</label>
                 <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                     <input
-                        className={`border rounded px-3 py-2 pl-7 w-full ${!submitted || isValidAmount ? "border-gray-300" : "border-red-500 bg-red-50"}`}
+                        className={`border rounded px-3 py-2 pl-7 w-full bg-neutral-800 text-white placeholder-gray-500 ${!submitted || isValidAmount ? "border-white/10" : "border-red-500 bg-red-950/40"}`}
                         value={amount}
                         type="text"
                         inputMode="decimal"
@@ -48,35 +48,35 @@ export function TransactionForm({ onCreate }: TransactionFormProps) {
                     />
                 </div>
                 {submitted && !isValidAmount && (
-                    <p className="text-red-500 text-sm">Please enter a valid dollar amount</p>
+                    <p className="text-red-400 text-sm">Please enter a valid dollar amount</p>
                 )}
-                <label className="text-gray-700">Date</label>
+                <label className="text-gray-400 text-sm">Date</label>
                 <input
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className={`border rounded px-3 py-2 ${!submitted || isValidDate ? "border-gray-300" : "border-red-500 bg-red-50"}`}
+                    className={`border rounded px-3 py-2 bg-neutral-800 text-white ${!submitted || isValidDate ? "border-white/10" : "border-red-500 bg-red-950/40"}`}
                 />
                 {submitted && !isValidDate && (
-                    <p className="text-red-500 text-sm">Please select a date</p>
+                    <p className="text-red-400 text-sm">Please select a date</p>
                 )}
-                <label className="text-gray-700">Category</label>
+                <label className="text-gray-400 text-sm">Category</label>
                 <CategoryPicker value={categoryId} onChange={setCategoryId} />
                 {submitted && !isValidCategory && (
-                    <p className="text-red-500 text-sm">Please select a category</p>
+                    <p className="text-red-400 text-sm">Please select a category</p>
                 )}
 
-                <label className="text-gray-700">Additional Notes</label>
+                <label className="text-gray-400 text-sm">Additional Notes</label>
                 <input
                     type="text"
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     placeholder="Note"
-                    className="border border-gray-300 rounded px-3 py-2"
+                    className="border border-white/10 bg-neutral-800 text-white placeholder-gray-500 rounded px-3 py-2"
                 />
                 <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer transition duration-300"
+                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition duration-300"
                 >
                     Create Transaction
                 </button>

@@ -16,7 +16,7 @@ export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
     return (
         <div>
             <select
-                className="border border-gray-300 rounded px-3 py-2"
+                className="border border-white/10 bg-neutral-800 text-white rounded px-3 py-2 w-full"
                 value={value}
                 onChange={(e) => onChange(Number(e.target.value))}
             >
