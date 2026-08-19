@@ -1,7 +1,7 @@
 const categoryArray: Category[] = [
     {
         id: 1,
-        name: "Grocery Shopping",
+        name: "Food",
         color: "pink",
         userId: 1
     },

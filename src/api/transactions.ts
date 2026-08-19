@@ -3,7 +3,7 @@ const transactionArray: Transaction[] = [
         id: 1,
         amount: 100,
         date: '2026-08-01',
-        note: 'idk',
+        title: 'idk',
         categoryId: 1,
         userId: 1
     },
@@ -11,7 +11,7 @@ const transactionArray: Transaction[] = [
         id: 2,
         amount: 50,
         date: '2026-08-02',
-        note: 'idk2',
+        title: 'idk2',
         categoryId: 2,
         userId: 1
     },
@@ -19,7 +19,7 @@ const transactionArray: Transaction[] = [
         id: 3,
         amount: 200,
         date: '2026-08-03',
-        note: 'idk3',
+        title: 'idk3',
         categoryId: 3,
         userId: 1
     }
@@ -29,7 +29,7 @@ export interface Transaction {
     id: number,
     amount: number,
     date: string,
-    note: string,
+    title: string,
     categoryId: number,
     userId: number
 }

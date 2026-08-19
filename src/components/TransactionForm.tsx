@@ -3,38 +3,61 @@ import { createTransaction, type Transaction } from "../api/transactions";
 import { CategoryPicker } from "./CategoryPicker";
 
 type TransactionFormProps = {
+    transaction?: Transaction | null;
     onCreate: (transaction: Transaction) => void;
+    onUpdate: (transaction: Transaction) => void;
 };
 
-export function TransactionForm({ onCreate }: TransactionFormProps) {
+export function TransactionForm({ transaction, onCreate, onUpdate }: TransactionFormProps) {
 
-    const [amount, setAmount] = useState<string>("");
-    const [date, setDate] = useState<string>("");
-    const [note, setNote] = useState<string>("");
-    const [categoryId, setCategoryId] = useState<number | "">("");
+    const [amount, setAmount] = useState<string>(transaction ? transaction.amount.toString() : "");
+    const [date, setDate] = useState<string>(transaction ? transaction.date : "");
+    const [title, setTitle] = useState<string>(transaction ? transaction.title : "");
+    const [categoryId, setCategoryId] = useState<number | "">(transaction ? transaction.categoryId : "");
     const [submitted, setSubmitted] = useState(false);
     const isValidAmount = /^\d+(\.\d{1,2})?$/.test(amount);
     const isValidDate = date !== "";
     const isValidCategory = categoryId !== "";
+    const isValidTitle = title.trim() !== "";
 
     return (
         <div className="max-w-sm">
-            <h1 className="text-xl font-bold text-white mb-4">Add a Transaction</h1>
+            <h1 className="text-xl font-bold text-white mb-4">
+                {transaction ? "Update Transaction" : "Add a Transaction"}
+            </h1>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
                     setSubmitted(true);
                     if (categoryId === "") return;
-                    if (!isValidAmount || amount === "" || !isValidDate || !isValidCategory) return;
-
-                    createTransaction({ amount: Number(amount), date, note, categoryId, userId: 1 }).then(newTransaction => {
-                        onCreate(newTransaction);
-                    });
+                    if (!isValidAmount || amount === "" || !isValidDate || !isValidCategory || !isValidTitle) return;
+                    if (transaction) {
+                        onUpdate({ ...transaction, amount: Number(amount), date, title, categoryId });
+                    } else {
+                        createTransaction({ amount: Number(amount), date, title, categoryId, userId: 1 }).then(newTransaction => {
+                            onCreate(newTransaction);
+                            setTitle("");
+                            setAmount("");
+                            setDate("");
+                            setCategoryId("");
+                        });
+                    }
 
                     setSubmitted(false);
                 }}
                 className="flex flex-col gap-3"
             >
+                <label className="text-gray-400 text-sm">Title</label>
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Title"
+                    className={`border rounded px-3 py-2 bg-neutral-800 text-white placeholder-gray-500 ${!submitted || isValidTitle ? "border-white/10" : "border-red-500 bg-red-950/40"}`}
+                />
+                {submitted && !isValidTitle && (
+                    <p className="text-red-400 text-sm">Please enter a title</p>
+                )}
                 <label className="text-gray-400 text-sm">Amount</label>
                 <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
@@ -66,19 +89,11 @@ export function TransactionForm({ onCreate }: TransactionFormProps) {
                     <p className="text-red-400 text-sm">Please select a category</p>
                 )}
 
-                <label className="text-gray-400 text-sm">Additional Notes</label>
-                <input
-                    type="text"
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
-                    placeholder="Note"
-                    className="border border-white/10 bg-neutral-800 text-white placeholder-gray-500 rounded px-3 py-2"
-                />
                 <button
                     type="submit"
-                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition duration-300"
+                    className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition duration-300"
                 >
-                    Create Transaction
+                    {transaction ? "Update Transaction" : "Create Transaction"}
                 </button>
             </form>
         </div>
