@@ -47,7 +47,7 @@ export function BudgetsPage() {
             </div>
             <div className="max-w-3xl mx-auto">
                 <div className="flex items-center justify-between mb-4">
-                    <h1 className="text-2xl font-bold text-white">Budgets Page</h1>
+                    <h1 className="text-2xl font-bold text-white">Budgets</h1>
                     <button
                         onClick={() => {
                             // Logic to open a modal or navigate to a budget creation page

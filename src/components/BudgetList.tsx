@@ -75,7 +75,7 @@ export function BudgetList({ budgets, categories, transactions, onEdit, onDelete
                                     </button>
                                 </div>
                                 <span className="text-gray-200">
-                                    ${spent.toFixed(2)} / ${budget.limitAmount} <span className="text-xs">limit</span>
+                                    ${spent.toFixed(2)} / ${budget.limitAmount.toLocaleString()} <span className="text-xs text-gray-400">limit</span>
                                 </span>
                             </div>
                         </div>
