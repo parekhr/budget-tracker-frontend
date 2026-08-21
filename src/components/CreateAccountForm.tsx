@@ -1,20 +1,21 @@
 import { useState } from "react";
 
 type CreateAccountFormProps = {
-    onSubmit: (username: string, password: string) => void;
+    onSubmit: (username: string, password: string, email: string) => void;
 };
 
 export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [email, setEmail] = useState("");
 
     return (
         <form
             className="flex flex-col gap-3 text-left"
             onSubmit={(e) => {
                 e.preventDefault();
-                onSubmit(username, password);
+                onSubmit(username, password, email);
             }}
         >
             <div>
@@ -41,6 +42,15 @@ export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full px-3 py-2 rounded bg-neutral-800 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+            </div>
+            <div>
+                <label className="block text-gray-400 text-sm mb-1">Email</label>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-3 py-2 rounded bg-neutral-800 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
             </div>

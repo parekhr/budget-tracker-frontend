@@ -14,6 +14,12 @@ const summary: Summary = {
         categoryName: "Gaming",
         color: "blue",
         amount: 500
+    },
+    {
+        categoryId: 3,
+        categoryName: "Entertainment",
+        color: "red",
+        amount: 300
     }
     ],
     budgetVsActual: [{

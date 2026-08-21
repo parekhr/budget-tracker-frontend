@@ -4,7 +4,7 @@ import { CreateAccountForm } from "../components/CreateAccountForm";
 export function CreateAccountPage() {
     const navigate = useNavigate();
 
-    function handleCreateAccount(_username: string, _password: string) {
+    function handleCreateAccount(_username: string, _password: string, _email: string) {
         // will add once backend is set up
     }
 
