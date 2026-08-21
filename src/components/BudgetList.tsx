@@ -2,20 +2,20 @@ import { Pencil, Trash2, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { type Budget } from "../api/budgets";
 import type { Category } from "../api/categories";
-import type { Transaction } from "../api/transactions";
+import type { BudgetVsActual } from "../api/summary";
 import { getCategoryColorStyle } from "../utils/categoryColors";
 
 interface BudgetListProps {
     budgets: Budget[];
     categories: Category[];
     onEdit: (budget: Budget) => void;
-    transactions: Transaction[];
+    budgetVsActual: BudgetVsActual[];
     onDelete: (id: number) => void;
 }
 
 
 
-export function BudgetList({ budgets, categories, transactions, onEdit, onDelete }: BudgetListProps) {
+export function BudgetList({ budgets, categories, budgetVsActual, onEdit, onDelete }: BudgetListProps) {
     const [confirmingDeleteId, setConfirmingDeleteId] = useState<number | null>(null);
 
     return (
@@ -23,9 +23,7 @@ export function BudgetList({ budgets, categories, transactions, onEdit, onDelete
             {budgets.map((budget) => {
                 const category = categories.find(c => c.id === budget.categoryId);
 
-                const spent = transactions
-                .filter(t => t.categoryId === budget.categoryId && t.date.startsWith(budget.month))
-                .reduce((sum, t) => sum + t.amount, 0);
+                const spent = budgetVsActual.find(b => b.categoryId === budget.categoryId)?.spentAmount ?? 0;
 
                 const percentage = Math.round((spent / budget.limitAmount) * 100);
                 const barColor = percentage >= 90 ? "bg-red-600" : percentage >= 50 ? "bg-yellow-600" : "bg-green-600";

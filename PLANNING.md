@@ -23,6 +23,20 @@ Client-side state (`useState`) is reserved strictly for UI-only concerns that
 don't need to survive a refresh: form input values before submit, modal
 open/closed state, active filter/tab selection.
 
+**Check every new component that touches money against this rule.** This
+principle is easy to violate by accident — `BudgetList` summed transactions
+client-side to compute "spent" for a while before it was caught, purely
+because no one re-checked it against this rule after it was first built.
+Before adding a component that reads `Transaction`/`Budget`/`Summary` data,
+search for `.reduce(`, `+=`, or any place touching `.amount` across multiple
+records — a `Summary`/`BudgetVsActual`/`TrendPoint` field should already
+carry the computed number; the frontend should only be reading it, not
+calculating it. The one accepted exception found so far is `CategoryBreakdown`
+bucketing several small categories into a display-only "Other" total — that's
+regrouping numbers the API already returned, not deriving new ones from raw
+transaction data, which is a materially different thing from what `BudgetList`
+was doing.
+
 ## MVP features
 
 - User auth (register/login/password reset)

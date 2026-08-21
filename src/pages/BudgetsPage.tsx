@@ -4,7 +4,7 @@ import { BudgetForm } from "../components/BudgetForm";
 import { Modal } from "../components/Modal";
 import { useEffect, useState } from "react";
 import { getCategories, type Category } from "../api/categories";
-import { getTransactions, type Transaction } from "../api/transactions";
+import { getSummary, type BudgetVsActual } from "../api/summary";
 
 export function BudgetsPage() {
     const [modal, setModal] = useState(false);
@@ -12,7 +12,7 @@ export function BudgetsPage() {
     const [budgets, setBudgets] = useState<Budget[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [editingBudget, setEditingBudget] = useState<Budget | null>(null);
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [budgetVsActual, setBudgetVsActual] = useState<BudgetVsActual[]>([]);
     const [currentMonth, setCurrentMonth] = useState<string>("2026-08"); // "YYYY-MM", same format as Budget.month
 
     useEffect(() => {
@@ -24,8 +24,8 @@ export function BudgetsPage() {
     }, []);
 
     useEffect(() => {
-        getTransactions().then(setTransactions);
-    }, []);
+        getSummary(currentMonth).then(summary => setBudgetVsActual(summary.budgetVsActual));
+    }, [currentMonth]);
 
     function handleDeleteBudget(id: number) {
         deleteBudget(id).then(() => {
@@ -95,7 +95,7 @@ export function BudgetsPage() {
                 <BudgetList
                     budgets={budgets.filter(b => b.month === currentMonth)}
                     categories={categories}
-                    transactions={transactions}
+                    budgetVsActual={budgetVsActual}
                     onEdit={(budget) => {
                         setModal(true);
                         setEditingBudget(budget);
