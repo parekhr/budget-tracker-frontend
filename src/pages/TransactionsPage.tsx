@@ -39,7 +39,7 @@ export function TransactionsPage() {
         <div className="min-h-screen bg-black p-6">
             <div className="max-w-3xl mx-auto">
                 <div className="flex items-center justify-between mb-4">
-                    <h1 className="text-2xl font-bold text-white">Transaction</h1>
+                    <h1 className="text-2xl font-bold text-white">Transactions</h1>
                     <button
                         onClick={() => { 
                             setEditingTransaction(null); 
