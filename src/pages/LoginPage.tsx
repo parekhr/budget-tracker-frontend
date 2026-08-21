@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import { LoginForm } from "../components/LoginForm"
 
 export function LoginPage() {
     const { login } = useAuth()
@@ -7,33 +8,28 @@ export function LoginPage() {
 
     return (
         <div className="min-h-screen bg-black flex items-center justify-center">
-            <div className="text-center">
+            <div className="w-full max-w-sm text-center">
                 <h1 className="text-3xl font-bold text-white mb-6">Login</h1>
-                <form>
-                    <div className="mb-4">
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            className="w-full px-4 py-2 border border-white/10 bg-neutral-800 text-white placeholder-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            className="w-full px-4 py-2 border border-white/10 bg-neutral-800 text-white placeholder-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-                        />
-                    </div>
-                </form>
-                <button
-                    onClick={() => {
+                <LoginForm
+                    onSubmit={() => {
                         login()
                         navigate("/")
                     }}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer transition duration-300"
-                >
-                    Login
-                </button>
+                />
+                <div className="flex items-center justify-between mt-4 text-sm">
+                    <button
+                        onClick={() => navigate("/forgot-password")}
+                        className="text-gray-400 hover:text-white cursor-pointer transition duration-300"
+                    >
+                        Forgot password?
+                    </button>
+                    <button
+                        onClick={() => navigate("/create-account")}
+                        className="text-blue-400 hover:text-blue-300 cursor-pointer transition duration-300"
+                    >
+                        Create new account
+                    </button>
+                </div>
             </div>
         </div>
     )

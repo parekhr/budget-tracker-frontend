@@ -25,7 +25,7 @@ open/closed state, active filter/tab selection.
 
 ## MVP features
 
-- User auth (register/login)
+- User auth (register/login/password reset)
 - Categories (CRUD)
 - Transactions (CRUD: amount, category, date, title)
 - Dashboard (spending by category, spending trend over time, total spent)
@@ -58,6 +58,12 @@ open/closed state, active filter/tab selection.
 
 ```
 App / AuthProvider (auth state + route guard)
+  ├─ LoginPage
+  │    └─ LoginForm
+  ├─ CreateAccountPage
+  │    └─ CreateAccountForm
+  ├─ ForgotPasswordPage
+  │    └─ ForgotPasswordForm
   └─ Layout
        ├─ DashboardPage
        │    ├─ SummaryCards
@@ -80,6 +86,13 @@ App / AuthProvider (auth state + route guard)
 `DashboardPage` fetches `/api/summary/` once and passes slices down as props
 to `SummaryCards` / `CategoryBreakdown` / `BudgetProgressList` rather than
 each fetching independently — avoids duplicate requests, keeps them in sync.
+
+`LoginForm` / `CreateAccountForm` / `ForgotPasswordForm` follow the same
+Page-owns-data/Form-owns-inputs split as the other `*Form` components, but for
+a different reason: `TransactionForm`/`CategoryForm`/`BudgetForm` are split
+out because one component is reused for both create and edit. The auth forms
+are each used exactly once on their own page — no add/edit duality — so the
+split there is purely for consistency with the rest of the app, not reuse.
 
 ## Auth / routing expectations
 
