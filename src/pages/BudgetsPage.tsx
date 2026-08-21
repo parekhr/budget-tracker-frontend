@@ -13,6 +13,7 @@ export function BudgetsPage() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [editingBudget, setEditingBudget] = useState<Budget | null>(null);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [currentMonth, setCurrentMonth] = useState<string>("2026-08"); // "YYYY-MM", same format as Budget.month
 
     useEffect(() => {
         getCategories().then(setCategories);
@@ -41,9 +42,41 @@ export function BudgetsPage() {
     return (
         <div className="min-h-screen bg-black p-6">
             <div className="flex items-center justify-center gap-3 text-gray-400 mb-2">
-                <button className="cursor-pointer hover:text-white">{"<"}</button>
-                <span className="text-white font-medium">August 2026</span>
-                <button className="cursor-pointer hover:text-white">{">"}</button>
+                <button
+                    className="cursor-pointer hover:text-white text-xl px-2"
+                    onClick={() => {
+                        const [year, month] = currentMonth.split("-").map(Number);
+                        // Jan rolls back to Dec of the previous year
+                        const prevMonth = month === 1 ? 12 : month - 1;
+                        const prevYear = month === 1 ? year - 1 : year;
+                        setCurrentMonth(`${prevYear}-${prevMonth.toString().padStart(2, "0")}`);
+                    }}
+                >
+                    {"<"}
+                </button>
+                {/* w-40 keeps this a fixed width so the arrows don't shift left/right as the label's length changes (e.g. "May" vs "September") */}
+                <span className="text-white font-medium w-40 text-center">
+                    {(() => {
+                        const [year, month] = currentMonth.split("-").map(Number);
+                        // Built from numeric year/month (not `new Date("2026-08-01")`) so this
+                        // constructs in local time — parsing a date-only string treats it as UTC
+                        // midnight, which can roll back a day (and month) once toLocaleDateString
+                        // renders it in a timezone behind UTC.
+                        return new Date(year, month - 1, 1).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+                    })()}
+                </span>
+                <button
+                    className="cursor-pointer hover:text-white text-xl px-2"
+                    onClick={() => {
+                        const [year, month] = currentMonth.split("-").map(Number);
+                        // Dec rolls forward to Jan of the next year
+                        const nextMonth = month === 12 ? 1 : month + 1;
+                        const nextYear = month === 12 ? year + 1 : year;
+                        setCurrentMonth(`${nextYear}-${nextMonth.toString().padStart(2, "0")}`);
+                    }}
+                >
+                    {">"}
+                </button>
             </div>
             <div className="max-w-3xl mx-auto">
                 <div className="flex items-center justify-between mb-4">
@@ -60,7 +93,7 @@ export function BudgetsPage() {
                     </button>
                 </div>
                 <BudgetList
-                    budgets={budgets}
+                    budgets={budgets.filter(b => b.month === currentMonth)}
                     categories={categories}
                     transactions={transactions}
                     onEdit={(budget) => {
@@ -74,6 +107,8 @@ export function BudgetsPage() {
                 <Modal onClose={() => setModal(false)}>
                     <BudgetForm
                         budget={editingBudget}
+                        budgets={budgets}
+                        currentMonth={currentMonth}
                         onCreate={(newBudget) => {
                             setBudgets(prev => [...prev, newBudget]);
                             setModal(false);
