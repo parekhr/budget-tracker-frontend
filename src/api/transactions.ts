@@ -2,7 +2,7 @@ const transactionArray: Transaction[] = [
     {
         id: 1,
         amount: 100,
-        date: '2026-08-01',
+        date: '2026-08-10',
         title: 'idk',
         categoryId: 1,
         userId: 1

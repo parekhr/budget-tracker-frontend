@@ -4,6 +4,9 @@ import { getSummary, type Summary, type TrendPoint, getTrends } from "../api/sum
 import { useEffect, useState } from "react"
 import { CategoryBreakdown } from "../components/CategoryBreakdown"
 import { SpendingTrend } from "../components/SpendingTrend"
+import { BudgetProgressList } from "../components/BudgetProgressList"
+import { TransactionList } from "../components/TransactionList"
+import { getCategories, type Category } from "../api/categories"
 
 const CURRENT_MONTH = new Date().toISOString().slice(0, 7) // "YYYY-MM"
 
@@ -13,6 +16,7 @@ export function DashboardPage() {
     const [transactions, setTransactions] = useState<Transaction[]>([])
     const [month, setMonth] = useState<string>(CURRENT_MONTH)
     const [trends, setTrends] = useState<TrendPoint[]>([])
+    const [categories, setCategories] = useState<Category[]>([])
     const isCurrentMonth = month === CURRENT_MONTH
 
     useEffect(() => {
@@ -25,6 +29,10 @@ export function DashboardPage() {
 
     useEffect(() => {
         getTrends(8).then(setTrends)
+    }, [])
+
+    useEffect(() => {
+        getCategories().then(setCategories)
     }, [])
 
     return (
@@ -80,6 +88,20 @@ export function DashboardPage() {
                     <SpendingTrend data={trends} />
                 </div>
             </div>
+                <div className="bg-neutral-900 border border-white/10 rounded-xl p-4 mt-4">
+                    <h2 className="text-white font-semibold mb-4 text-center">Budget progress</h2>
+                    <BudgetProgressList budgetVsActual={summary?.budgetVsActual ?? []} />
+                </div>
+                <div className="bg-neutral-900 border border-white/10 rounded-xl p-4 mt-4">
+                    
+                    <h2 className="text-white font-semibold mb-4 text-center">Recent Transactions</h2>
+                    <TransactionList
+                        transactions={transactions.filter(t => t.date.slice(0, 7) === month)}
+                        categories={categories}
+                        limit={5}
+                        //read-only, no edit or delete actions provided
+                    />
+                </div>
         </div>
     )
 }
