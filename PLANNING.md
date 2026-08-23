@@ -52,7 +52,7 @@ was doing.
 - `User` — Django's built-in auth user (or a custom user model)
 - `Category` — id, user_id (FK), name, color, created_at
   - `color` is a hex string (e.g. `#ec4899`) chosen from a frontend swatch picker, not a fixed enum — model it as a `CharField` with hex-format validation (e.g. a regex validator for `#RRGGBB`), not `choices=[...]`
-- `Transaction` — id, user_id (FK), category_id (FK), amount, date, title, created_at
+- `Transaction` — id, user_id (FK), category_id (FK), amount, date, title, created_at, additional_notes (optional, added post-plan on the frontend)
 - `Budget` — id, user_id (FK), category_id (FK), month, limit_amount
 
 ## Backend responsibilities (Django + DRF)
