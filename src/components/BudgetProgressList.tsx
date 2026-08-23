@@ -23,10 +23,17 @@ export function BudgetProgressList({ budgetVsActual }: { budgetVsActual: BudgetV
                                         <AlertTriangle size={14} className={warningColor} aria-label="Approaching or over budget" />
                                     )}
                                 </div>
-                                <span>
-                                    <span className={`font-semibold ${spentColor}`}>${item.spentAmount.toLocaleString()}</span>
-                                    <span className="text-sm text-gray-500"> / ${item.limitAmount.toLocaleString()} limit</span>
-                                </span>
+                                <div className="flex flex-col items-end gap-1">
+                                    {item.spentAmount > item.limitAmount && (
+                                        <span className="text-xs text-red-400">
+                                            Over limit by ${(item.spentAmount - item.limitAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                        </span>
+                                    )}
+                                    <span>
+                                        <span className={`font-semibold ${spentColor}`}>${item.spentAmount.toLocaleString()}</span>
+                                        <span className="text-sm text-gray-500"> / ${item.limitAmount.toLocaleString()} limit</span>
+                                    </span>
+                                </div>
                             </div>
                             <div className="h-1.5 bg-neutral-800 rounded-full overflow-hidden">
                                 <div className={`h-full rounded-full ${barColor}`} style={{ width: `${Math.min(percentage, 100)}%` }}></div>

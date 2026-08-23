@@ -2,6 +2,7 @@ import { getTransactions, type Transaction } from "../api/transactions"
 import { SummaryCards } from "../components/SummaryCards"
 import { getSummary, type Summary, type TrendPoint, getTrends } from "../api/summary"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { CategoryBreakdown } from "../components/CategoryBreakdown"
 import { SpendingTrend } from "../components/SpendingTrend"
 import { BudgetProgressList } from "../components/BudgetProgressList"
@@ -9,6 +10,7 @@ import { TransactionList } from "../components/TransactionList"
 import { getCategories, type Category } from "../api/categories"
 
 const CURRENT_MONTH = new Date().toISOString().slice(0, 7) // "YYYY-MM"
+const RECENT_TRANSACTIONS_LIMIT = 5
 
 export function DashboardPage() {
 
@@ -18,6 +20,7 @@ export function DashboardPage() {
     const [trends, setTrends] = useState<TrendPoint[]>([])
     const [categories, setCategories] = useState<Category[]>([])
     const isCurrentMonth = month === CURRENT_MONTH
+    const monthTransactions = transactions.filter(t => t.date.slice(0, 7) === month)
 
     useEffect(() => {
         getSummary(month).then(setSummary)
@@ -28,8 +31,8 @@ export function DashboardPage() {
     }, [])
 
     useEffect(() => {
-        getTrends(8).then(setTrends)
-    }, [])
+        getTrends(8, month).then(setTrends)
+    }, [month])
 
     useEffect(() => {
         getCategories().then(setCategories)
@@ -75,7 +78,7 @@ export function DashboardPage() {
                     totalSpent={summary.totalSpent}
                     budgeted={summary.budgeted}
                     remaining={summary.remaining}
-                    transactionCount={transactions.filter(t => t.date.slice(0, 7) === month).length}
+                    transactionCount={monthTransactions.length}
                 />
             )}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
@@ -96,11 +99,19 @@ export function DashboardPage() {
                     
                     <h2 className="text-white font-semibold mb-4 text-center">Recent Transactions</h2>
                     <TransactionList
-                        transactions={transactions.filter(t => t.date.slice(0, 7) === month)}
+                        transactions={monthTransactions}
                         categories={categories}
-                        limit={5}
+                        limit={RECENT_TRANSACTIONS_LIMIT}
+                        emptyMessage="No recent transactions"
                         //read-only, no edit or delete actions provided
                     />
+                    {monthTransactions.length > RECENT_TRANSACTIONS_LIMIT && (
+                        <div className="mt-3 text-center">
+                            <Link to="/transactions" className="text-blue-400 hover:text-blue-300 text-sm transition">
+                                View all transactions
+                            </Link>
+                        </div>
+                    )}
                 </div>
         </div>
     )

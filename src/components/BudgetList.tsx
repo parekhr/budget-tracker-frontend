@@ -31,7 +31,7 @@ export function BudgetList({ budgets, categories, budgetVsActual, onEdit, onDele
                     const barColor = percentage >= 90 ? "bg-red-600" : percentage >= 50 ? "bg-yellow-600" : "bg-green-600";
                     const spentColor = percentage >= 90 ? "text-red-400" : percentage >= 50 ? "text-yellow-400" : "text-green-400";
                     const warningColor = percentage >= 90 ? "text-red-400" : "text-yellow-400";
-
+                    
                     return (
                         <div
                             key={budget.id}
@@ -74,6 +74,11 @@ export function BudgetList({ budgets, categories, budgetVsActual, onEdit, onDele
                                             )}
                                         </button>
                                     </div>
+                                    {spent > budget.limitAmount && (
+                                        <span className="text-xs text-red-400">
+                                            Over limit by ${(spent - budget.limitAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                        </span>
+                                    )}
                                     <span>
                                         <span className={`font-semibold ${spentColor}`}>${spent.toLocaleString()}</span>
                                         <span className="text-sm text-gray-500"> / ${budget.limitAmount.toLocaleString()} limit</span>

@@ -15,6 +15,7 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
     const [title, setTitle] = useState<string>(transaction ? transaction.title : "");
     const [categoryId, setCategoryId] = useState<number | "">(transaction ? transaction.categoryId : "");
     const [submitted, setSubmitted] = useState(false);
+    const [additionalNotes, setAdditionalNotes] = useState<string>(transaction ? transaction?.additionalNotes ?? "" : "");
     const isValidAmount = /^\d+(\.\d{1,2})?$/.test(amount);
     const isValidDate = date !== "";
     const isValidCategory = categoryId !== "";
@@ -32,14 +33,15 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
                     if (categoryId === "") return;
                     if (!isValidAmount || amount === "" || !isValidDate || !isValidCategory || !isValidTitle) return;
                     if (transaction) {
-                        onUpdate({ ...transaction, amount: Number(amount), date, title, categoryId });
+                        onUpdate({ ...transaction, amount: Number(amount), date, title, categoryId, additionalNotes });
                     } else {
-                        createTransaction({ amount: Number(amount), date, title, categoryId, userId: 1 }).then(newTransaction => {
+                        createTransaction({ amount: Number(amount), date, title, categoryId, userId: 1, additionalNotes }).then(newTransaction => {
                             onCreate(newTransaction);
                             setTitle("");
                             setAmount("");
                             setDate("");
                             setCategoryId("");
+                            setAdditionalNotes("");
                         });
                     }
 
@@ -88,6 +90,13 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
                 {submitted && !isValidCategory && (
                     <p className="text-red-400 text-sm">Please select a category</p>
                 )}
+                <label className="text-gray-400 text-sm">Additional Notes</label>
+                <textarea
+                    value={additionalNotes}
+                    onChange={(e) => setAdditionalNotes(e.target.value)}
+                    placeholder="Add any additional notes for this transaction..."
+                    className="border rounded px-3 py-2 bg-neutral-800 text-white placeholder-gray-500 border-white/10"
+                />
 
                 <button
                     type="submit"

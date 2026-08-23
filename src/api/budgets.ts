@@ -4,21 +4,21 @@ const budgetArray: Budget[] = [
         userId: 1,
         categoryId: 1,
         month: "2026-08",
-        limitAmount: 2000
+        limitAmount: 1500
     },
     {
         id: 2,
         userId: 1,
         categoryId: 2,
         month: "2026-08",
-        limitAmount: 5000
+        limitAmount: 2000
     },
     {
         id: 3,
         userId: 1,
         categoryId: 3,
         month: "2026-08",
-        limitAmount: 10000
+        limitAmount: 1000
     }
 
 ]

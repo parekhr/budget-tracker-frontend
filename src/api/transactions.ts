@@ -1,27 +1,64 @@
 const transactionArray: Transaction[] = [
     {
         id: 1,
-        amount: 100,
+        amount: 61.62,
         date: '2026-08-10',
-        title: 'idk',
+        title: 'In-N-Out',
         categoryId: 1,
-        userId: 1
+        userId: 1,
+        createdAt: '2026-08-10T09:00:00.000Z',
+        additionalNotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus sed omnis totam debitis repudiandae sunt, ut consequuntur iure animi? Illum quibusdam ratione aut explicabo deserunt sequi iste, placeat aliquam velit?'
     },
     {
         id: 2,
-        amount: 50,
+        amount: 12.99,
         date: '2026-08-02',
-        title: 'idk2',
+        title: 'Spotify Premium',
         categoryId: 2,
-        userId: 1
+        userId: 1,
+        createdAt: '2026-08-02T09:00:00.000Z',
+        additionalNotes: ''
     },
     {
         id: 3,
-        amount: 200,
+        amount: 64.36,
         date: '2026-08-03',
-        title: 'idk3',
+        title: 'Gaming Headset',
         categoryId: 3,
-        userId: 1
+        userId: 1,
+        createdAt: '2026-08-03T09:00:00.000Z',
+        additionalNotes: ''
+    },
+    {
+        id: 4,
+        amount: 264.36,
+        date: '2026-08-23',
+        title: 'Krispy Kreme',
+        categoryId: 1,
+        userId: 1,
+        createdAt: '2026-08-23T09:00:00.000Z',
+        additionalNotes: ''
+    },
+    {
+        id: 5,
+        amount: 1563.90,
+        date: '2026-08-23',
+        title: 'Nexon Cash',
+        categoryId: 2,
+        userId: 1,
+        createdAt: '2026-08-23T09:00:00.000Z',
+        additionalNotes: ''
+    }
+    ,
+    {
+        id: 6,
+        amount: 2763.75,
+        date: '2026-08-23',
+        title: 'Howling Rays',
+        categoryId: 1,
+        userId: 1,
+        createdAt: '2026-08-23T09:00:00.000Z',
+        additionalNotes: ''
     }
 ];
 
@@ -31,15 +68,17 @@ export interface Transaction {
     date: string,
     title: string,
     categoryId: number,
-    userId: number
+    userId: number,
+    createdAt: string
+    additionalNotes?: string
 }
 
 export function getTransactions(): Promise<Transaction[]>{
         return Promise.resolve([...transactionArray]);
 }
 
-export function createTransaction(transaction: Omit<Transaction, 'id'>): Promise<Transaction> {
-    const newTransaction = { ...transaction, id: Math.floor(Math.random() * 1000) + 1 }
+export function createTransaction(transaction: Omit<Transaction, 'id' | 'createdAt'>): Promise<Transaction> {
+    const newTransaction = { ...transaction, id: Math.floor(Math.random() * 1000) + 1, createdAt: new Date().toISOString() }
     transactionArray.push(newTransaction);
 
     return Promise.resolve(newTransaction);

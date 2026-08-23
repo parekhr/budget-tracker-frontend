@@ -2,89 +2,6 @@ import { getBudgets } from "./budgets"
 import { getTransactions } from "./transactions"
 import { getCategories } from "./categories"
 
-const summary: Summary = {
-    totalSpent: 1000,
-    budgeted: 2000,
-    remaining: 1000,
-    spendByCategory: [
-    {
-        categoryId: 1,
-        categoryName: "Shopping",
-        color: "green",
-        amount: 500
-    },
-    {
-        categoryId: 2,
-        categoryName: "Gaming",
-        color: "blue",
-        amount: 500
-    },
-    {
-        categoryId: 3,
-        categoryName: "Entertainment",
-        color: "red",
-        amount: 300
-    },
-    {
-        categoryId: 4,
-        categoryName: "Groceries",
-        color: "yellow",
-        amount: 1500
-    },
-    {
-        categoryId: 5,
-        categoryName: "Utilities",
-        color: "purple",
-        amount: 5000
-    },
-    {
-        categoryId: 6,
-        categoryName: "Health",
-        color: "pink",
-        amount: 1451
-    },
-    {
-        categoryId: 7,
-        categoryName: "Travel",
-        color: "teal",
-        amount: 7302
-    },
-    
-    ],
-    budgetVsActual: []
-}
-
-const trendPoints: TrendPoint[] = [
-    {
-        period: "2026-02",
-        totalSpent: 2532
-    },
-    {
-        period: "2026-03",
-        totalSpent: 104
-    },
-    {
-        period: "2026-04",
-        totalSpent: 500
-    },
-    {
-        period: "2026-05",
-        totalSpent: 750
-    },
-    {
-        period: "2026-06",
-        totalSpent: 1500
-    },
-    {
-        period: "2026-07",
-        totalSpent: 3500
-    },
-    {
-        period: "2026-08",
-        totalSpent: 4500
-    }
-]
-
 export interface Summary {
     totalSpent: number,
     budgeted: number,
@@ -136,10 +53,42 @@ export async function getSummary(month: string): Promise<Summary> {
         }
     })
 
-    return { ...summary, budgetVsActual }
+    const monthCategoryIds = [...new Set(monthTransactions.map(t => t.categoryId))]
+    const spendByCategory: CategoryBreakdown[] = monthCategoryIds.map(categoryId => {
+        const category = categories.find(c => c.id === categoryId)
+        const amount = monthTransactions
+            .filter(t => t.categoryId === categoryId)
+            .reduce((sum, t) => sum + t.amount, 0)
+
+        return {
+            categoryId,
+            categoryName: category?.name ?? "Unknown",
+            color: category?.color ?? "#6b7280",
+            amount
+        }
+    })
+
+    const totalSpent = monthTransactions.reduce((sum, t) => sum + t.amount, 0)
+    const budgeted = monthBudgets.reduce((sum, b) => sum + b.limitAmount, 0)
+    const remaining = budgeted - totalSpent
+
+    return { totalSpent, budgeted, remaining, spendByCategory, budgetVsActual }
 }
 
-export function getTrends(months: number): Promise<TrendPoint[]> {
-    const newTrendPoints = trendPoints.slice(-months)
-    return Promise.resolve(newTrendPoints);
+export async function getTrends(months: number, endMonth: string): Promise<TrendPoint[]> {
+    const transactions = await getTransactions()
+    const [endYear, endMonthNum] = endMonth.split("-").map(Number)
+    const points: TrendPoint[] = []
+
+    for (let i = months - 1; i >= 0; i--) {
+        const date = new Date(endYear, endMonthNum - 1 - i, 1)
+        const period = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}`
+        const totalSpent = transactions
+            .filter(t => t.date.startsWith(period))
+            .reduce((sum, t) => sum + t.amount, 0)
+
+        points.push({ period, totalSpent })
+    }
+
+    return points
 }

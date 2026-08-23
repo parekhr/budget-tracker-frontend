@@ -17,8 +17,10 @@ export function SummaryCards({ totalSpent, budgeted, remaining, transactionCount
                 <p className="text-2xl font-bold text-white">${totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             </div>
             <div className="bg-neutral-900 border border-white/10 p-4 rounded-xl text-center">
-                <h2 className="text-sm font-medium text-gray-400">Remaining Amount</h2>
-                <p className="text-2xl font-bold text-white">${remaining.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                <h2 className="text-sm font-medium text-gray-400">{remaining < 0 ? "Over Budget" : "Remaining Amount"}</h2>
+                <p className={`text-2xl font-bold ${remaining < 0 ? "text-red-400" : "text-white"}`}>
+                    ${Math.abs(remaining).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </p>
             </div>
             <div className="bg-neutral-900 border border-white/10 p-4 rounded-xl text-center">
                 <h2 className="text-sm font-medium text-gray-400"># of Transactions</h2>

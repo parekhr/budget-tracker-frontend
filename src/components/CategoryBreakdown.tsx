@@ -48,32 +48,48 @@ function ChartTooltip({ active, payload }: any) {
 export function CategoryBreakdown({ data }: CategoryBreakdownProps) {
     const [activeIndex, setActiveIndex] = useState<number | null>(null)
     const chartData = toChartData(data)
+    const isEmpty = chartData.length === 0
+    const displayData: ChartDatum[] = isEmpty
+        ? [{ categoryId: -2, categoryName: "", color: "transparent", amount: 0 }]
+        : chartData
 
     return (
         <div className="flex flex-col gap-2">
-            <ResponsiveContainer width="100%" height={180}>
-                <BarChart data={chartData} maxBarSize={50}>
-                    <XAxis dataKey="categoryName" tick={false} tickLine={false} stroke="#9ca3af" />
-                    <YAxis stroke="#9ca3af" interval={0} tickFormatter={(value: number) => `$${value.toLocaleString()}`} />
-                    <Tooltip cursor={false} content={<ChartTooltip />} />
-                    <Bar
-                        dataKey="amount"
-                        isAnimationActive={false}
-                        onMouseEnter={(_, index) => setActiveIndex(index)}
-                        onMouseLeave={() => setActiveIndex(null)}
-                        shape={(props: any) => (
-                            <rect
-                                x={props.x}
-                                y={props.y}
-                                width={props.width}
-                                height={props.height}
-                                fill={props.payload.color}
-                                fillOpacity={props.index === activeIndex ? 0.7 : 1}
-                            />
-                        )}
-                    />
-                </BarChart>
-            </ResponsiveContainer>
+            <div className="relative">
+                <ResponsiveContainer width="100%" height={180}>
+                    <BarChart data={displayData} maxBarSize={50}>
+                        <XAxis dataKey="categoryName" tick={false} tickLine={false} stroke="#9ca3af" />
+                        <YAxis
+                            stroke="#9ca3af"
+                            interval={0}
+                            domain={isEmpty ? [0, 100] : undefined}
+                            tickFormatter={(value: number) => `$${value.toLocaleString()}`}
+                        />
+                        <Tooltip cursor={false} content={<ChartTooltip />} />
+                        <Bar
+                            dataKey="amount"
+                            isAnimationActive={false}
+                            onMouseEnter={(_, index) => setActiveIndex(index)}
+                            onMouseLeave={() => setActiveIndex(null)}
+                            shape={(props: any) => (
+                                <rect
+                                    x={props.x}
+                                    y={props.y}
+                                    width={props.width}
+                                    height={props.height}
+                                    fill={props.payload.color}
+                                    fillOpacity={props.index === activeIndex ? 0.7 : 1}
+                                />
+                            )}
+                        />
+                    </BarChart>
+                </ResponsiveContainer>
+                {isEmpty && (
+                    <p className="absolute inset-0 flex items-center justify-center text-gray-400 text-center text-sm pointer-events-none">
+                        No spending data
+                    </p>
+                )}
+            </div>
             <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center">
                 {chartData.map(item => (
                     <div key={item.categoryId} className="flex items-center gap-1.5">
