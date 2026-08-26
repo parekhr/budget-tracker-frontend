@@ -23,6 +23,7 @@ export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
                 <input
                     type="text"
                     value={username}
+                    placeholder="Username"
                     onChange={(e) => setUsername(e.target.value)}
                     className="w-full px-3 py-2 rounded bg-neutral-800 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
@@ -32,6 +33,7 @@ export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
                 <input
                     type="password"
                     value={password}
+                    placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-3 py-2 rounded bg-neutral-800 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
@@ -41,6 +43,7 @@ export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
                 <input
                     type="password"
                     value={confirmPassword}
+                    placeholder="Confirm Password"
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full px-3 py-2 rounded bg-neutral-800 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
@@ -50,6 +53,7 @@ export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
                 <input
                     type="email"
                     value={email}
+                    placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-3 py-2 rounded bg-neutral-800 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />

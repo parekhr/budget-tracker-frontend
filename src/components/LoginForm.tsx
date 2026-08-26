@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 type LoginFormProps = {
-    onSubmit: (username: string, password: string) => void;
+    onSubmit: (email: string, password: string) => void;
 };
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     return (
@@ -13,14 +13,14 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             className="flex flex-col gap-3 text-left"
             onSubmit={(e) => {
                 e.preventDefault();
-                onSubmit(username, password);
+                onSubmit(email, password);
             }}
         >
             <input
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
                 className="w-full px-4 py-2 border border-white/10 rounded bg-neutral-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
             <input
