@@ -25,7 +25,7 @@ export function CategoryList({ categories, onEdit, onDelete }: CategoryListProps
                     >
                         <span className="font-medium">{category.name}</span>
                         <div className="flex items-center gap-2">
-                            {category.id !== 0 && (
+                            {!category.isDefault && (
                                 <button
                                     onClick={() => onEdit(category)}
                                     className="h-6 px-1 flex items-center justify-center rounded cursor-pointer hover:bg-white/10"
@@ -34,7 +34,7 @@ export function CategoryList({ categories, onEdit, onDelete }: CategoryListProps
                                     <Pencil size={14} className="text-gray-400" />
                                 </button>
                             )}
-                            {category.id !== 0 && (
+                            {!category.isDefault && (
                                 <button
                                     onClick={() => {
                                         if (confirmingDeleteId === category.id) {

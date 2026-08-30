@@ -36,8 +36,17 @@ export function BudgetsPage() {
     function handleEditBudget(updatedBudget: Budget) {
         updateBudget(updatedBudget).then((newBudget) => {
             setBudgets(prev => prev.map(b => b.id === newBudget.id ? newBudget : b));
+            fetchBudgetVsActual();
         });
     }
+
+    function fetchBudgetVsActual() {
+        getSummary(currentMonth).then(summary => setBudgetVsActual(summary.budgetVsActual));
+    }
+
+    useEffect(() => {
+        fetchBudgetVsActual();
+    }, [currentMonth]);
 
     return (
         <div className="min-h-screen bg-black p-6">
@@ -111,6 +120,7 @@ export function BudgetsPage() {
                         currentMonth={currentMonth}
                         onCreate={(newBudget) => {
                             setBudgets(prev => [...prev, newBudget]);
+                            fetchBudgetVsActual();
                             setModal(false);
                         }}
                         onUpdate={(updatedBudget) => {

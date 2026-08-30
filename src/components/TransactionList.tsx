@@ -35,7 +35,7 @@ export function TransactionList({ transactions, categories, onEdit, onDelete, li
                 <p className="text-gray-400 text-center text-sm">{emptyMessage}</p>
             ) : (
                 visibleTransactions.map(transaction => {
-                    const category = categories.find(c => c.id === transaction.categoryId);
+                    const category = categories.find(c => c.id === transaction.category);
                     return (
                         <div key={transaction.id} className="flex items-center gap-4 bg-neutral-900 border border-white/10 rounded-xl px-4 py-3">
                             <div className="flex flex-col items-start gap-1 flex-shrink-0">

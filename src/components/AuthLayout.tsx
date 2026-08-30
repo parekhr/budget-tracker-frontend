@@ -9,7 +9,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
             <div className="relative z-10 flex-shrink-0 flex flex-col items-center gap-5 text-center bg-neutral-900/90 backdrop-blur-sm border border-white/10 rounded-2xl p-10 shadow-2xl w-full max-w-6xl">
                 <div className="flex flex-col items-center gap-2">
                     <div className="flex items-center gap-3">
-                        <div className="h-8 w-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
+                        <div className="h-8 w-12 rounded-2xl bg-green-600 flex items-center justify-center text-white text-2xl font-bold">
                             $
                         </div>
                         <span className="text-2xl font-bold text-white">Budget Tracker</span>
@@ -44,17 +44,19 @@ export function AuthLayout({ children }: { children: ReactNode }) {
                                 <span>$0</span>
                             </div>
                             <div className="flex-1 flex items-end justify-center gap-3 h-24 border-l border-b border-white/10 pl-2">
-                                <div className="w-20 rounded-t bg-pink-500" style={{ height: "90%" }} />
+                                <div className="w-20 rounded-t bg-red-500" style={{ height: "90%" }} />
                                 <div className="w-20 rounded-t bg-green-500" style={{ height: "55%" }} />
                                 <div className="w-20 rounded-t bg-blue-500" style={{ height: "25%" }} />
                                 <div className="w-20 rounded-t bg-pink-500" style={{ height: "70%" }} />
-                                <div className="w-20 rounded-t bg-green-500" style={{ height: "40%" }} />
+                                <div className="w-20 rounded-t bg-purple-500" style={{ height: "40%" }} />
                             </div>
                         </div>
                         <div className="flex items-center justify-center gap-3 mt-1.5 text-[9px] text-gray-500">
-                            <span className="flex items-center gap-5"><span className="h-1.5 w-1.5 rounded-full bg-pink-500" />Food</span>
-                            <span className="flex items-center gap-5"><span className="h-1.5 w-1.5 rounded-full bg-green-500" />Gaming</span>
+                            <span className="flex items-center gap-5"><span className="h-1.5 w-1.5 rounded-full bg-red-500" />Gaming</span>
+                            <span className="flex items-center gap-5"><span className="h-1.5 w-1.5 rounded-full bg-green-500" />Health</span>
                             <span className="flex items-center gap-5"><span className="h-1.5 w-1.5 rounded-full bg-blue-500" />Subs</span>
+                            <span className="flex items-center gap-5"><span className="h-1.5 w-1.5 rounded-full bg-pink-500" />Food</span>
+                            <span className="flex items-center gap-5"><span className="h-1.5 w-1.5 rounded-full bg-purple-500" />Other</span>
                         </div>
                     </div>
                     <div className="bg-neutral-800 rounded-lg p-4">
@@ -80,7 +82,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
                 </div>
             </div>
 
-            <div className="relative z-10 flex-shrink-0 bg-neutral-900/90 backdrop-blur-sm border border-white/10 rounded-2xl p-5 shadow-2xl w-full max-w-xl">
+            <div className="relative z-10 flex-shrink-0 bg-neutral-900/90 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-2xl w-full max-w-xl">
                 {children}
             </div>
 
@@ -128,15 +130,24 @@ export function AuthLayout({ children }: { children: ReactNode }) {
                     </div>
 
                     <div className="bg-neutral-800 rounded-lg p-3 flex flex-col justify-center gap-10 overflow-hidden">
-                        <div className="flex flex-col gap-7.5">
-                            <div className="h-2.5 rounded-full bg-white/10 overflow-hidden">
-                                <div className="h-full bg-green-500" style={{ width: "60%" }} />
+                        <div className="flex flex-col gap-6">
+                            <div className="flex items-center gap-2">
+                                <div className="flex-1 h-2.5 rounded-full bg-white/10 overflow-hidden">
+                                    <div className="h-full bg-green-500" style={{ width: "40%" }} />
+                                </div>
+                                <span className="text-xs text-green-400 font-medium w-9 text-right">40%</span>
                             </div>
-                            <div className="h-2.5 rounded-full bg-white/10 overflow-hidden">
-                                <div className="h-full bg-yellow-500" style={{ width: "85%" }} />
+                            <div className="flex items-center gap-2">
+                                <div className="flex-1 h-2.5 rounded-full bg-white/10 overflow-hidden">
+                                    <div className="h-full bg-yellow-500" style={{ width: "75%" }} />
+                                </div>
+                                <span className="text-xs text-yellow-400 font-medium w-9 text-right">75%</span>
                             </div>
-                            <div className="h-2.5 rounded-full bg-white/10 overflow-hidden">
-                                <div className="h-full bg-red-500" style={{ width: "100%" }} />
+                            <div className="flex items-center gap-2">
+                                <div className="flex-1 h-2.5 rounded-full bg-white/10 overflow-hidden">
+                                    <div className="h-full bg-red-500" style={{ width: "100%" }} />
+                                </div>
+                                <span className="text-xs text-red-400 font-medium w-9 text-right">100%</span>
                             </div>
                         </div>
                         <div>

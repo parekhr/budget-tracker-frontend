@@ -65,7 +65,7 @@ export function CategoryBreakdown({ data }: CategoryBreakdownProps) {
                             domain={isEmpty ? [0, 100] : undefined}
                             tickFormatter={(value: number) => `$${value.toLocaleString()}`}
                         />
-                        <Tooltip cursor={false} content={<ChartTooltip />} />
+                        <Tooltip cursor={false} content={isEmpty ? () => null : <ChartTooltip />} />
                         <Bar
                             dataKey="amount"
                             isAnimationActive={false}

@@ -58,7 +58,7 @@ export function CategoryForm({ category, onCreate, onUpdate }: CategoryFormProps
                     if (category) {
                         onUpdate({ ...category, name, color });
                     } else {
-                        createCategory({ name, color, userId: 1 }).then(newCategory => {
+                        createCategory({ name, color }).then(newCategory => {
                             onCreate(newCategory);
                             setName("");
                             setColor(COLOR_SWATCHES[0]);

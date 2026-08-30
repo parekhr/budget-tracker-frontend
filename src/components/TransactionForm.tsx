@@ -13,7 +13,7 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
     const [amount, setAmount] = useState<string>(transaction ? transaction.amount.toString() : "");
     const [date, setDate] = useState<string>(transaction ? transaction.date : "");
     const [title, setTitle] = useState<string>(transaction ? transaction.title : "");
-    const [categoryId, setCategoryId] = useState<number | "">(transaction ? transaction.categoryId : "");
+    const [categoryId, setCategoryId] = useState<number | "">(transaction ? transaction.category : "");
     const [submitted, setSubmitted] = useState(false);
     const [additionalNotes, setAdditionalNotes] = useState<string>(transaction ? transaction?.additionalNotes ?? "" : "");
     const isValidAmount = /^\d+(\.\d{1,2})?$/.test(amount);
@@ -33,9 +33,9 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
                     if (categoryId === "") return;
                     if (!isValidAmount || amount === "" || !isValidDate || !isValidCategory || !isValidTitle) return;
                     if (transaction) {
-                        onUpdate({ ...transaction, amount: Number(amount), date, title, categoryId, additionalNotes });
+                        onUpdate({ ...transaction, amount: Number(amount), date, title, category: categoryId, additionalNotes });
                     } else {
-                        createTransaction({ amount: Number(amount), date, title, categoryId, userId: 1, additionalNotes }).then(newTransaction => {
+                        createTransaction({ amount: Number(amount), date, title, category: categoryId, additionalNotes }).then(newTransaction => {
                             onCreate(newTransaction);
                             setTitle("");
                             setAmount("");

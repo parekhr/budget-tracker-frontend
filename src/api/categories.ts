@@ -1,64 +1,32 @@
-import { reassignTransactionsCategory } from "./transactions";
-
-const categoryArray: Category[] = [
-    {
-        id: 0,
-        name: "Uncategorized",
-        color: "#6b7280",
-        userId: 1
-    },
-    {
-        id: 1,
-        name: "Food and drinks",
-        color: "#ec4899",
-        userId: 1
-    },
-    {
-        id: 2,
-        name: "Gaming",
-        color: "#22c55e",
-        userId: 1
-    },
-    {
-        id: 3,
-        name: "Subscriptions",
-        color: "#3b82f6",
-        userId: 1
-    }
-];
+import { apiFetch } from "./client";
 
 export interface Category{
     id: number,
     name: string,
     color: string,
-    userId: number,
+    isDefault: boolean,
 }
 
 export function getCategories(): Promise<Category[]>{
-    return Promise.resolve([...categoryArray]);
+    return apiFetch<Category[]>("/categories/")
 }
 
-export function createCategory(category: Omit<Category, 'id'>): Promise<Category> {
-    const newCategory = { ...category, id: Math.floor(Math.random() * 1000) + 1 }
-    categoryArray.push(newCategory);
-
-    return Promise.resolve(newCategory)
+export function createCategory(category: Omit<Category, 'id' | 'isDefault'>): Promise<Category> {
+    return apiFetch<Category>("/categories/", {
+        method: "POST",
+        body: JSON.stringify(category)
+    });
 }
 
 export function updateCategory(category: Category): Promise<Category> {
-    const indexToUpdate = categoryArray.findIndex(item => item.id === category.id);
-    categoryArray[indexToUpdate] = category;
-
-    return Promise.resolve(category)
+    return apiFetch<Category>(`/categories/${category.id}/`, {
+        method: "PUT",
+        body: JSON.stringify(category)
+    });
 }
 
 export function deleteCategory(id: number): Promise<void> {
-    if (id === 0) {
-        return Promise.resolve();
-    }
-
-    return reassignTransactionsCategory(id, 0).then(() => {
-        const indexToDelete = categoryArray.findIndex(item => item.id === id);
-        categoryArray.splice(indexToDelete, 1);
+    return apiFetch<void>(`/categories/${id}/`, {
+        method: "DELETE"
     });
 }

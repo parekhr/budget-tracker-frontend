@@ -23,9 +23,9 @@ export function BudgetList({ budgets, categories, budgetVsActual, onEdit, onDele
                 <p className="text-gray-400 text-center text-sm">No budgets set</p>
             ) : (
                 budgets.map((budget) => {
-                    const category = categories.find(c => c.id === budget.categoryId);
+                    const category = categories.find(c => c.id === budget.category);
 
-                    const spent = budgetVsActual.find(b => b.categoryId === budget.categoryId)?.spentAmount ?? 0;
+                    const spent = budgetVsActual.find(b => b.categoryId === budget.category)?.spentAmount ?? 0;
 
                     const percentage = Math.round((spent / budget.limitAmount) * 100);
                     const barColor = percentage >= 90 ? "bg-red-600" : percentage >= 50 ? "bg-yellow-600" : "bg-green-600";

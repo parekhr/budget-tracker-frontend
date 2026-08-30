@@ -12,7 +12,7 @@ type BudgetFormProps = {
 };
 
 export function BudgetForm({ budget, budgets, currentMonth, onCreate, onUpdate }: BudgetFormProps) {
-    const [categoryId, setCategoryId] = useState<number | "">(budget ? budget.categoryId : "");
+    const [categoryId, setCategoryId] = useState<number | "">(budget ? budget.category : "");
     const [month, setMonth] = useState<string>(budget ? budget.month : currentMonth);
     const [limitAmount, setLimitAmount] = useState<string>(budget ? budget.limitAmount.toString() : "");
     const [submitted, setSubmitted] = useState(false);
@@ -36,16 +36,16 @@ export function BudgetForm({ budget, budgets, currentMonth, onCreate, onUpdate }
                         // `b.id !== budget.id` excludes the budget being edited itself — otherwise
                         // saving it unchanged would always "match" its own month/category and
                         // falsely look like a duplicate.
-                        if (budgets.some(b => b.id !== budget.id && b.month === month && b.categoryId === categoryId)) {
+                        if (budgets.some(b => b.id !== budget.id && b.month === month && b.category === categoryId)) {
                             alert("A budget for this month and category already exists.");
                         } else {
-                            onUpdate({ ...budget, month, limitAmount: Number(limitAmount), categoryId });
+                            onUpdate({ ...budget, month, limitAmount: Number(limitAmount), category: categoryId });
                         }
-                    } else if (budgets.some(b => b.month === month && b.categoryId === categoryId)) {
+                    } else if (budgets.some(b => b.month === month && b.category === categoryId)) {
                         // Creating new — no self to exclude, so check the whole list for a conflict.
                         alert("A budget for this month and category already exists.");
                     } else {
-                        createBudget({ month, limitAmount: Number(limitAmount), categoryId, userId: 1 }).then(newBudget => {
+                        createBudget({ month, limitAmount: Number(limitAmount), category: categoryId }).then(newBudget => {
                             onCreate(newBudget);
                         });
                     }
