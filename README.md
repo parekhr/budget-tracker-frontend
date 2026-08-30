@@ -2,6 +2,16 @@
 
 A React + TypeScript single-page app for tracking personal spending, setting monthly budgets by category, and catching overspending before it happens. Talks to the [Django REST API backend](https://github.com/parekhr/budget-tracker-backend) - no mock data, every number on screen comes from the real database.
 
+## Screenshots
+
+| Dashboard | Transactions |
+|---|---|
+| ![Dashboard](screenshots/dashboard.png) | ![Transactions](screenshots/transactions.png) |
+
+| Categories | Budgets |
+|---|---|
+| ![Categories](screenshots/categories.png) | ![Budgets](screenshots/budgets.png) |
+
 ## Tech Stack
 
 - React 19 + TypeScript

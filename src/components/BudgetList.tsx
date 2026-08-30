@@ -80,8 +80,8 @@ export function BudgetList({ budgets, categories, budgetVsActual, onEdit, onDele
                                         </span>
                                     )}
                                     <span>
-                                        <span className={`font-semibold ${spentColor}`}>${spent.toLocaleString()}</span>
-                                        <span className="text-sm text-gray-500"> / ${budget.limitAmount.toLocaleString()} limit</span>
+                                        <span className={`font-semibold ${spentColor}`}>${spent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                        <span className="text-sm text-gray-500"> / ${budget.limitAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} limit</span>
                                     </span>
                                 </div>
                             </div>

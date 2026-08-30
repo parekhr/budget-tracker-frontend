@@ -30,8 +30,8 @@ export function BudgetProgressList({ budgetVsActual }: { budgetVsActual: BudgetV
                                         </span>
                                     )}
                                     <span>
-                                        <span className={`font-semibold ${spentColor}`}>${item.spentAmount.toLocaleString()}</span>
-                                        <span className="text-sm text-gray-500"> / ${item.limitAmount.toLocaleString()} limit</span>
+                                        <span className={`font-semibold ${spentColor}`}>${item.spentAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                        <span className="text-sm text-gray-500"> / ${item.limitAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} limit</span>
                                     </span>
                                 </div>
                             </div>
