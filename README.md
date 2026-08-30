@@ -4,11 +4,15 @@ A React + TypeScript single-page app for tracking personal spending, setting mon
 
 ## Screenshots
 
-![Dashboard](screenshots/dashboard.png)
+<img src="screenshots/dashboard.png" width="100%" alt="Dashboard" />
 
-| Transactions | Categories | Budgets |
-|---|---|---|
-| ![Transactions](screenshots/transactions.png) | ![Categories](screenshots/categories.png) | ![Budgets](screenshots/budgets.png) |
+<table>
+<tr>
+<td width="33%"><img src="screenshots/transactions.png" width="100%" alt="Transactions" /></td>
+<td width="33%"><img src="screenshots/categories.png" width="100%" alt="Categories" /></td>
+<td width="33%"><img src="screenshots/budgets.png" width="100%" alt="Budgets" /></td>
+</tr>
+</table>
 
 ## Tech Stack
 
