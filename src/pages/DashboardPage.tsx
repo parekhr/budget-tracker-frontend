@@ -40,8 +40,8 @@ export function DashboardPage() {
 
     return (
         <div className="min-h-screen bg-black p-6">
-            <h1 className="text-2xl font-bold text-white mb-2">Dashboard</h1>
-            <div className="flex items-center gap-3 text-gray-400 mb-4">
+            <h1 className="text-2xl font-bold text-white mb-2 text-center md:text-left">Dashboard</h1>
+            <div className="flex items-center justify-center md:justify-start gap-3 text-gray-400 mb-4">
                 <button
                     className="cursor-pointer hover:text-white text-xl px-2"
                     onClick={() => {

@@ -1,10 +1,11 @@
 import { useState } from "react";
 
 type CreateAccountFormProps = {
-    onSubmit: (username: string, password: string, email: string) => void;
+    onSubmit: (username: string, password: string, confirmPassword: string, email: string) => void;
+    isSubmitting?: boolean;
 };
 
-export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
+export function CreateAccountForm({ onSubmit, isSubmitting }: CreateAccountFormProps) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,7 +16,7 @@ export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
             className="flex flex-col gap-3 text-left"
             onSubmit={(e) => {
                 e.preventDefault();
-                onSubmit(username, password, email);
+                onSubmit(username, password, confirmPassword, email);
             }}
         >
             <div>
@@ -60,9 +61,10 @@ export function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
             </div>
             <button
                 type="submit"
-                className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer transition duration-300"
+                disabled={isSubmitting}
+                className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                Create Account
+                {isSubmitting ? "Creating account..." : "Create Account"}
             </button>
         </form>
     );
