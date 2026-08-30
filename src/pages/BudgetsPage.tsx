@@ -23,10 +23,6 @@ export function BudgetsPage() {
         getBudgets().then(setBudgets);
     }, []);
 
-    useEffect(() => {
-        getSummary(currentMonth).then(summary => setBudgetVsActual(summary.budgetVsActual));
-    }, [currentMonth]);
-
     function handleDeleteBudget(id: number) {
         deleteBudget(id).then(() => {
             setBudgets(prev => prev.filter(b => b.id !== id));
