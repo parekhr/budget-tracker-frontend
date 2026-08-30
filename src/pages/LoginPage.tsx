@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { LoginForm } from "../components/LoginForm"
+import { AuthLayout } from "../components/AuthLayout"
 
 
 export function LoginPage() {
@@ -14,8 +15,8 @@ export function LoginPage() {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center">
-            <div className="w-full max-w-sm text-center">
+        <AuthLayout>
+            <div className="w-full max-w-xl text-center">
                 <h1 className="text-3xl font-bold text-white mb-6">Login</h1>
                 <LoginForm
                     isSubmitting={isSubmitting}
@@ -49,6 +50,6 @@ export function LoginPage() {
                     </button>
                 </div>
             </div>
-        </div>
+        </AuthLayout>
     )
 }

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ForgotPasswordForm } from "../components/ForgotPasswordForm";
+import { AuthLayout } from "../components/AuthLayout";
 import { apiFetch } from "../api/client";
 import { useState } from "react";
 
@@ -22,8 +23,8 @@ export function ForgotPasswordPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center">
-            <div className="w-full max-w-sm text-center">
+        <AuthLayout>
+            <div className="w-full max-w-xl text-center">
                 <h1 className="text-3xl font-bold text-white mb-6">Forgot Password</h1>
                 <ForgotPasswordForm onSubmit={handleForgotPassword} isSubmitting={isSubmitting} />
                 {confirmationMessage && <p className="text-green-500 text-sm mt-2">{confirmationMessage}</p>}
@@ -34,6 +35,6 @@ export function ForgotPasswordPage() {
                     Back to login
                 </button>
             </div>
-        </div>
+        </AuthLayout>
     );
 }

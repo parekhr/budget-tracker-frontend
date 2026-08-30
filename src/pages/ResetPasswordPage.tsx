@@ -1,5 +1,6 @@
 import { apiFetch } from "../api/client";
 import { ResetPasswordForm } from "../components/ResetPasswordForm";
+import { AuthLayout } from "../components/AuthLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
@@ -10,8 +11,8 @@ export function ResetPasswordPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center">
-            <div className="w-full max-w-sm text-center">
+        <AuthLayout>
+            <div className="w-full max-w-xl text-center">
                 <h1 className="text-3xl font-bold text-white mb-6">Reset Password</h1>
                 <ResetPasswordForm
                     isSubmitting={isSubmitting}
@@ -33,7 +34,7 @@ export function ResetPasswordPage() {
                 />
                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
-        </div>
+        </AuthLayout>
     );
 }
 

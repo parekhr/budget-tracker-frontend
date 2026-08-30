@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { CreateAccountForm } from "../components/CreateAccountForm";
+import { AuthLayout } from "../components/AuthLayout";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 
@@ -23,8 +24,8 @@ export function CreateAccountPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center p-6">
-            <div className="w-full max-w-sm text-center">
+        <AuthLayout>
+            <div className="w-full max-w-xl text-center">
                 <h1 className="text-2xl font-bold text-white mb-6">Create Account</h1>
                 <CreateAccountForm onSubmit={handleCreateAccount} isSubmitting={isSubmitting} />
                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
@@ -35,6 +36,6 @@ export function CreateAccountPage() {
                     Back to login
                 </button>
             </div>
-        </div>
+        </AuthLayout>
     );
 }
