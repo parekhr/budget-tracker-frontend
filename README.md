@@ -2,6 +2,8 @@
 
 A React + TypeScript single-page app for tracking personal spending, setting monthly budgets by category, and catching overspending before it happens. Talks to the [Django REST API backend](https://github.com/parekhr/budget-tracker-backend) - no mock data, every number on screen comes from the real database.
 
+**Live demo:** [budget-tracker-frontend-kohl.vercel.app](https://budget-tracker-frontend-kohl.vercel.app)
+
 ## Screenshots
 
 <img src="screenshots/dashboard.png" width="100%" alt="Dashboard" />
