@@ -1,6 +1,7 @@
 import { useState } from "react"
 import type { CategoryBreakdown as CategoryBreakdownData } from "../api/summary"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
+import { formatAxisCurrency } from "../utils/currency"
 
 type CategoryBreakdownProps = {
     data: CategoryBreakdownData[]
@@ -32,13 +33,13 @@ function ChartTooltip({ active, payload }: any) {
                     <p style={{ margin: 0, marginBottom: 4, color: "#ffffff", fontWeight: 600 }}>Other</p>
                     {item.otherItems.map((sub) => (
                         <p key={sub.categoryId} style={{ margin: 0, color: "#d1d5db" }}>
-                            {sub.categoryName}: ${sub.amount.toFixed(2)}
+                            {sub.categoryName}: ${sub.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </p>
                     ))}
                 </>
             ) : (
                 <p style={{ margin: 0, color: "#ffffff" }}>
-                    {item.categoryName}: ${item.amount.toFixed(2)}
+                    {item.categoryName}: ${item.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
             )}
         </div>
@@ -62,8 +63,9 @@ export function CategoryBreakdown({ data }: CategoryBreakdownProps) {
                         <YAxis
                             stroke="#9ca3af"
                             interval={0}
+                            width={80}
                             domain={isEmpty ? [0, 100] : undefined}
-                            tickFormatter={(value: number) => `$${value.toLocaleString()}`}
+                            tickFormatter={formatAxisCurrency}
                         />
                         <Tooltip cursor={false} content={isEmpty ? () => null : <ChartTooltip />} />
                         <Bar

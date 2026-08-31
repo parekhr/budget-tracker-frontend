@@ -1,5 +1,6 @@
 import { ResponsiveContainer, LineChart, XAxis, YAxis, Tooltip, Line } from "recharts"
 import type { TrendPoint } from "../api/summary"
+import { formatAxisCurrency } from "../utils/currency"
 
 function formatMonth(period: string, style: "short" | "long" = "short") {
     const [year, monthNum] = period.split("-").map(Number)
@@ -24,7 +25,7 @@ export function SpendingTrend({ data }: { data: TrendPoint[] }) {
             <ResponsiveContainer width="100%" height={180}>
                 <LineChart data={data}>
                     <XAxis dataKey="period" stroke="#9ca3af" interval={0} tickFormatter={(value: string) => formatMonth(value)} />
-                    <YAxis stroke="#9ca3af" interval={0} tickFormatter={(value: number) => `$${value.toLocaleString()}`} />
+                    <YAxis stroke="#9ca3af" interval={0} width={80} tickFormatter={formatAxisCurrency} />
                     <Tooltip cursor={false} content={<ChartTooltip />} />
                     <Line type="monotone" dataKey="totalSpent" stroke="#3b82f6" strokeWidth={2} dot={false} isAnimationActive={false} />
                 </LineChart>
