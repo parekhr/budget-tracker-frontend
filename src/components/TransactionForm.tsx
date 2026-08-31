@@ -16,7 +16,10 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
     const [categoryId, setCategoryId] = useState<number | "">(transaction ? transaction.category : "");
     const [submitted, setSubmitted] = useState(false);
     const [additionalNotes, setAdditionalNotes] = useState<string>(transaction ? transaction?.additionalNotes ?? "" : "");
-    const isValidAmount = /^\d+(\.\d{1,2})?$/.test(amount);
+    const [error, setError] = useState<string | null>(null);
+    const isValidAmountFormat = /^\d+(\.\d{1,2})?$/.test(amount);
+    const isAmountTooLarge = isValidAmountFormat && Number(amount) > 99_999_999.99;
+    const isValidAmount = isValidAmountFormat && !isAmountTooLarge;
     const isValidDate = date !== "";
     const isValidCategory = categoryId !== "";
     const isValidTitle = title.trim() !== "";
@@ -30,6 +33,7 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
                 onSubmit={(e) => {
                     e.preventDefault();
                     setSubmitted(true);
+                    setError(null);
                     if (categoryId === "") return;
                     if (!isValidAmount || amount === "" || !isValidDate || !isValidCategory || !isValidTitle) return;
                     if (transaction) {
@@ -42,6 +46,8 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
                             setDate("");
                             setCategoryId("");
                             setAdditionalNotes("");
+                        }).catch((err: any) => {
+                            setError(err instanceof Error ? err.message : "Failed to create transaction");
                         });
                     }
 
@@ -73,7 +79,9 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
                     />
                 </div>
                 {submitted && !isValidAmount && (
-                    <p className="text-red-400 text-sm">Please enter a valid dollar amount</p>
+                    <p className="text-red-400 text-sm">
+                        {isAmountTooLarge ? "Amount must be $99,999,999.99 or less" : "Please enter a valid dollar amount"}
+                    </p>
                 )}
                 <label className="text-gray-400 text-sm">Date</label>
                 <input
@@ -104,6 +112,7 @@ export function TransactionForm({ transaction, onCreate, onUpdate }: Transaction
                 >
                     {transaction ? "Update Transaction" : "Create Transaction"}
                 </button>
+                {error && <p className="text-red-400 text-sm">{error}</p>}
             </form>
         </div>
     )

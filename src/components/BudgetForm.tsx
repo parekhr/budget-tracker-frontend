@@ -16,7 +16,10 @@ export function BudgetForm({ budget, budgets, currentMonth, onCreate, onUpdate }
     const [month, setMonth] = useState<string>(budget ? budget.month : currentMonth);
     const [limitAmount, setLimitAmount] = useState<string>(budget ? budget.limitAmount.toString() : "");
     const [submitted, setSubmitted] = useState(false);
-    const isValidLimitAmount = /^\d+(\.\d{1,2})?$/.test(limitAmount);
+    const [error, setError] = useState<string | null>(null);
+    const isValidLimitAmountFormat = /^\d+(\.\d{1,2})?$/.test(limitAmount);
+    const isLimitAmountTooLarge = isValidLimitAmountFormat && Number(limitAmount) > 99_999_999.99;
+    const isValidLimitAmount = isValidLimitAmountFormat && !isLimitAmountTooLarge;
     const isValidMonth = month !== "";
     const isValidCategory = categoryId !== "";
 
@@ -30,6 +33,7 @@ export function BudgetForm({ budget, budgets, currentMonth, onCreate, onUpdate }
                 onSubmit={(e) => {
                     e.preventDefault();
                     setSubmitted(true);
+                    setError(null);
                     if (!isValidMonth || !isValidCategory || !isValidLimitAmount || limitAmount === "") return;
 
                     if (budget) {
@@ -47,6 +51,8 @@ export function BudgetForm({ budget, budgets, currentMonth, onCreate, onUpdate }
                     } else {
                         createBudget({ month, limitAmount: Number(limitAmount), category: categoryId }).then(newBudget => {
                             onCreate(newBudget);
+                        }).catch((err: any) => {
+                            setError(err instanceof Error ? err.message : "Failed to create budget");
                         });
                     }
 
@@ -77,7 +83,9 @@ export function BudgetForm({ budget, budgets, currentMonth, onCreate, onUpdate }
                     />
                 </div>
                 {submitted && !isValidLimitAmount && (
-                    <p className="text-red-400 text-sm">Please enter a valid dollar amount</p>
+                    <p className="text-red-400 text-sm">
+                        {isLimitAmountTooLarge ? "Amount must be $99,999,999.99 or less" : "Please enter a valid dollar amount"}
+                    </p>
                 )}
                 <label className="text-gray-400 text-sm">Category</label>
                 <CategoryPicker value={categoryId} onChange={setCategoryId} />
@@ -90,6 +98,7 @@ export function BudgetForm({ budget, budgets, currentMonth, onCreate, onUpdate }
                 >
                     {budget ? "Update Budget" : "Create Budget"}
                 </button>
+                {error && <p className="text-red-400 text-sm">{error}</p>}
             </form>
         </div>
     )
