@@ -2,23 +2,23 @@ import type { ReactNode } from "react";
 
 export function AuthLayout({ children }: { children: ReactNode }) {
     return (
-        <div className="relative h-screen overflow-hidden bg-neutral-800 flex flex-col items-center justify-evenly gap-3 p-5">
+        <div className="relative min-h-screen bg-neutral-800 flex flex-col items-center justify-evenly gap-3 p-5">
             <div className="pointer-events-none absolute -top-32 -left-24 h-96 w-96 rounded-full bg-blue-600/30 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-32 -right-24 h-96 w-96 rounded-full bg-pink-600/20 blur-3xl" />
 
-            <div className="relative z-10 flex-shrink-0 flex flex-col items-center gap-5 text-center bg-neutral-900/90 backdrop-blur-sm border border-white/10 rounded-2xl p-10 shadow-2xl w-full max-w-6xl">
-                <div className="flex flex-col items-center gap-2">
-                    <div className="flex items-center gap-3">
-                        <div className="h-8 w-12 rounded-2xl bg-green-600 flex items-center justify-center text-white text-2xl font-bold">
-                            $
-                        </div>
-                        <span className="text-2xl font-bold text-white">Budget Tracker</span>
+            <div className="relative z-10 flex-shrink-0 flex flex-col items-center gap-2 text-center">
+                <div className="flex items-center gap-3">
+                    <div className="h-8 w-12 rounded-2xl bg-green-600 flex items-center justify-center text-white text-2xl font-bold">
+                        $
                     </div>
-                    <p className="text-gray-400 text-lg max-w-md">
-                        Track spending, set monthly budgets by category, and catch overspending before it happens.
-                    </p>
+                    <span className="text-2xl font-bold text-white">Budget Tracker</span>
                 </div>
+                <p className="hidden md:block text-gray-400 text-lg max-w-md">
+                    Track spending, set monthly budgets by category, and catch overspending before it happens.
+                </p>
+            </div>
 
+            <div className="hidden md:flex relative z-10 flex-shrink-0 flex-col items-center gap-5 text-center bg-neutral-900/90 backdrop-blur-sm border border-white/10 rounded-2xl p-10 shadow-2xl w-full max-w-6xl">
                 <div className="w-full grid grid-cols-3 gap-4" aria-hidden="true">
                     <div className="bg-neutral-800 rounded-lg p-3">
                         <div className="text-sm text-gray-500 mb-2">Monthly Budget</div>
@@ -86,7 +86,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
                 {children}
             </div>
 
-            <div className="relative z-10 flex-1 min-h-0 max-h-96 flex flex-col bg-neutral-900/90 backdrop-blur-sm border border-white/10 rounded-2xl p-10 w-full max-w-6xl shadow-2xl" aria-hidden="true">
+            <div className="hidden md:flex relative z-10 flex-1 min-h-0 max-h-96 flex-col bg-neutral-900/90 backdrop-blur-sm border border-white/10 rounded-2xl p-10 w-full max-w-6xl shadow-2xl" aria-hidden="true">
                 <div className="flex-shrink-0 mb-6 text-center">
                     <h3 className="text-xl font-bold text-white">Everything you need, in one place</h3>
                     <p className="text-gray-400 text-sm">Track spending, organize categories, and manage budgets</p>
