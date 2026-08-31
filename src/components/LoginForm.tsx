@@ -18,7 +18,9 @@ export function LoginForm({ onSubmit, isSubmitting }: LoginFormProps) {
             }}
         >
             <input
-                type="text"
+                type="email"
+                autoCapitalize="none"
+                autoCorrect="off"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
