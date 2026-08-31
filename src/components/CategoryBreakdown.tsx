@@ -58,7 +58,7 @@ export function CategoryBreakdown({ data }: CategoryBreakdownProps) {
         <div className="flex flex-col gap-2">
             <div className="relative">
                 <ResponsiveContainer width="100%" height={180}>
-                    <BarChart data={displayData} maxBarSize={50}>
+                    <BarChart data={displayData} maxBarSize={50} margin={{ top: 24, right: 5, bottom: 5, left: 5 }}>
                         <XAxis dataKey="categoryName" tick={false} tickLine={false} stroke="#9ca3af" />
                         <YAxis
                             stroke="#9ca3af"
@@ -73,16 +73,34 @@ export function CategoryBreakdown({ data }: CategoryBreakdownProps) {
                             isAnimationActive={false}
                             onMouseEnter={(_, index) => setActiveIndex(index)}
                             onMouseLeave={() => setActiveIndex(null)}
-                            shape={(props: any) => (
-                                <rect
-                                    x={props.x}
-                                    y={props.y}
-                                    width={props.width}
-                                    height={props.height}
-                                    fill={props.payload.color}
-                                    fillOpacity={props.index === activeIndex ? 0.7 : 1}
-                                />
-                            )}
+                            shape={(props: any) => {
+                                const MIN_BAR_HEIGHT = 4
+                                const height = isEmpty ? props.height : Math.max(props.height, MIN_BAR_HEIGHT)
+                                const y = props.y + props.height - height
+                                return (
+                                    <g>
+                                        <rect
+                                            x={props.x}
+                                            y={y}
+                                            width={props.width}
+                                            height={height}
+                                            fill={props.payload.color}
+                                            fillOpacity={props.index === activeIndex ? 0.7 : 1}
+                                        />
+                                        {!isEmpty && (
+                                            <text
+                                                x={props.x + props.width / 2}
+                                                y={y - 6}
+                                                textAnchor="middle"
+                                                fill="#e5e7eb"
+                                                fontSize={11}
+                                            >
+                                                {`$${props.payload.amount.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}
+                                            </text>
+                                        )}
+                                    </g>
+                                )
+                            }}
                         />
                     </BarChart>
                 </ResponsiveContainer>

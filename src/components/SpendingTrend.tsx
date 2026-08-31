@@ -23,7 +23,7 @@ export function SpendingTrend({ data }: { data: TrendPoint[] }) {
     return (
         <div className="flex flex-col gap-2">
             <ResponsiveContainer width="100%" height={180}>
-                <LineChart data={data}>
+                <LineChart data={data} margin={{ top: 20, right: 5, bottom: 5, left: 5 }}>
                     <XAxis dataKey="period" stroke="#9ca3af" interval={0} tickFormatter={(value: string) => formatMonth(value)} />
                     <YAxis stroke="#9ca3af" interval={0} width={80} tickFormatter={formatAxisCurrency} />
                     <Tooltip cursor={false} content={<ChartTooltip />} />
