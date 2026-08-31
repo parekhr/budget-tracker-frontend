@@ -16,8 +16,8 @@ export function CreateAccountPage() {
         try{
             await register(_username, _password, _confirmPassword, _email)
             navigate("/");
-        } catch {
-            setError("Failed to create account. Please try again.");
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to create account. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
