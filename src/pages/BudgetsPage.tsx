@@ -13,7 +13,7 @@ export function BudgetsPage() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [editingBudget, setEditingBudget] = useState<Budget | null>(null);
     const [budgetVsActual, setBudgetVsActual] = useState<BudgetVsActual[]>([]);
-    const [currentMonth, setCurrentMonth] = useState<string>("2026-08"); // "YYYY-MM", same format as Budget.month
+    const [currentMonth, setCurrentMonth] = useState<string>(() => new Date().toISOString().slice(0, 7)); // "YYYY-MM", same format as Budget.month
 
     useEffect(() => {
         getCategories().then(setCategories);
