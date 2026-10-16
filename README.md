@@ -1,6 +1,6 @@
 # Budget Tracker - Frontend
 
-A React + TypeScript single-page app for tracking personal spending, setting monthly budgets by category, and catching overspending before it happens. Talks to the [Django REST API backend](https://github.com/parekhr/budget-tracker-backend) - no mock data, every number on screen comes from the real database.
+A React + TypeScript single-page app for tracking personal spending, setting monthly budgets by category, and catching overspending before it happens. Talks to the [Django REST API backend](https://github.com/parekhr/budget-tracker-backend)
 
 **Live demo:** [budget-tracker-frontend-kohl.vercel.app](https://budget-tracker-frontend-kohl.vercel.app)
 
@@ -36,7 +36,7 @@ A React + TypeScript single-page app for tracking personal spending, setting mon
 ### Prerequisites
 
 - Node.js 18+
-- The [backend](https://github.com/parekhr/budget-tracker-backend) running - this app has no built-in mock mode, it expects a real API
+- The [backend](https://github.com/parekhr/budget-tracker-backend)
 
 ### 1. Install dependencies
 
