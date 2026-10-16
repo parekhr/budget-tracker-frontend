@@ -69,6 +69,10 @@ The app is available at `http://localhost:5173`.
 | `npm run preview` | Preview a production build locally |
 | `npm run lint` | Run oxlint |
 
+## Deployment
+
+Hosted on [Vercel](https://vercel.com). In production, `VITE_API_URL` is set in Vercel's environment variables to the live API on Render (`https://budget-tracker-backend-7o7c.onrender.com/api`). `vercel.json` rewrites every route to `index.html`, so loading or refreshing a client-side route like `/dashboard` doesn't 404.
+
 ## Related
 
 - [Backend](https://github.com/parekhr/budget-tracker-backend) - the Django REST API this app talks to
